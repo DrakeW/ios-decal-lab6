@@ -18,6 +18,11 @@ class LoginViewController: UIViewController {
     }
 
     // TODO: instantiate the views needed for your project
+    let label = UILabel()
+    let loginFieldVeiw = UIView()
+    let accountTextField = UITextField()
+    let passwordTextField = UITextField()
+    let loginButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,13 +30,67 @@ class LoginViewController: UIViewController {
         
         // TODO: Add your views either as subviews of `view` or subviews of each other using `addSubview`
         
+        label.text = "Login View Controller"
+        label.font = UIFont(name: "Avenir", size: 40)
+        label.numberOfLines = 0
+        label.textAlignment = NSTextAlignment.center
+        self.view.addSubview(label)
+        
+        
+        loginFieldVeiw.backgroundColor = UIColor.white
+        loginFieldVeiw.layer.cornerRadius = 10
+        self.view.addSubview(loginFieldVeiw)
+        
+        
+        accountTextField.placeholder = "berkeley.edu account"
+        loginFieldVeiw.addSubview(accountTextField)
+        passwordTextField.placeholder = "Password"
+        loginFieldVeiw.addSubview(passwordTextField)
+        
+        loginButton.backgroundColor = Constants.backgroundColor
+        loginButton.setTitle("Login", for: .normal)
+        loginButton.titleLabel?.textColor = UIColor.white
+        loginButton.titleLabel?.font = UIFont(name: "Avenir", size: 20)
+        loginButton.layer.cornerRadius = 10
+        loginFieldVeiw.addSubview(loginButton)
+        
+        loginButton.addTarget(self, action: #selector(login(sender:)), for: .touchDown)
+        
         // TODO: layout your views using frames or AutoLayout
+        label.frame = CGRect(x: 0.1 * self.view.frame.width,
+                             y: 0.1 * self.view.frame.width,
+                             width: 0.8 * self.view.frame.width,
+                             height: 300)
+        
+        loginFieldVeiw.frame = CGRect(x: 0, y: 0, width: 0.9 * self.view.frame.width, height: 200)
+        loginFieldVeiw.center = self.view.center
+        
+        let textFieldLeftRightPadding = CGFloat(10)
+        accountTextField.frame = CGRect(x: textFieldLeftRightPadding, y: 0,
+                                        width: loginFieldVeiw.frame.width - textFieldLeftRightPadding,
+                                        height: loginFieldVeiw.frame.height / 3)
+        passwordTextField.frame = CGRect(x: textFieldLeftRightPadding, y: accountTextField.frame.height,
+                                         width: loginFieldVeiw.frame.width - textFieldLeftRightPadding,
+                                         height: loginFieldVeiw.frame.height / 3)
+        
+        let topBottomPadding = CGFloat(10)
+        let btnWidth = 0.4 * loginFieldVeiw.frame.width
+        let btnHeight = CGFloat(40)
+        loginButton.frame = CGRect(x: loginFieldVeiw.frame.width / 2 - btnWidth / 2,
+                                   y: accountTextField.frame.height + passwordTextField.frame.height + topBottomPadding,
+                                   width: btnWidth,
+                                   height: btnHeight)
+
+
+        
     }
     
     // TODO: create an IBAction for your login button
-    
-    
-    
+    @IBAction func login(sender: UIButton) {
+        let username = accountTextField.text
+        let password = passwordTextField.text
+        authenticateUser(username: username, password: password)
+    }
     
     
     /// YOU DO NOT NEED TO MODIFY ANY OF THE CODE BELOW (but you will want to use `authenticateUser` at some point)
